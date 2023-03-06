@@ -7,20 +7,40 @@ import numpy
 
 def compute_height(n, parents):
     # Write this function
+    nodes = [[] for _ in range(n)]
+    for i in range(n):
+        if parents[i] == -1:
+            root = i
+        else:
+            nodes[parents[i]].append(i)
     max_height = 0
     # Your code here
+    stack = [(root, 1)]
+    while stack:
+        node, height = stack.pop()
+        max_height = max(max_height, height)
+        for child in nodes[node]:
+            stack.append((child, height+1))
     return max_height
 
 
-def main():
+def main(filename=None):
     # implement input form keyboard and from files
-    
+    if filename:
+        with open(filename, 'r') as f:
+            n = int(f.readline())
+            parents = list(map(int, f.readline().split()))
+    else:
+        n = int(input())
+        parents = list(map(int, input().split()))
+    print(compute_height(n, parents))
     # let user input file name to use, don't allow file names with letter a
     # account for github input inprecision
     
     # input number of elements
     # input values in one variable, separate with space, split these values in an array
     # call the function and output it's result
+    print(compute_height(n, parents))
     pass
 
 # In Python, the default limit on recursion depth is rather low,
