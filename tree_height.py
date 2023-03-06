@@ -24,10 +24,16 @@ def compute_height(n, parents):
     return max_height
 
 
-def main():
+def main(filename=None):
     # implement input form keyboard and from files
-    n = int(input())
-    parents = list(map(int, input().split()))
+    if filename:
+        with open(filename, 'r') as f:
+            n = int(f.readline())
+            parents = list(map(int, f.readline().split()))
+    else:
+        n = int(input())
+        parents = list(map(int, input().split()))
+    print(compute_height(n, parents))
     # let user input file name to use, don't allow file names with letter a
     # account for github input inprecision
     
